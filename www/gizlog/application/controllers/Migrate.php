@@ -6,17 +6,13 @@ class Migrate extends CI_Controller {
     function __construct()
     {
         parent::__construct();
-        if(! $this->input->is_cli_request()) {
-            show_404();
-            exit;
-        }
         $this->load->library('migration');
     }
 
     function current()
     {
         if ($this->migration->current()) {
-            log_message('error', 'Migration Success.');
+            log_message('success', 'Migration Success.');
         } else {
             log_message('error', $this->migration->error_string());
         }
@@ -25,7 +21,7 @@ class Migrate extends CI_Controller {
     function rollback($version)
     {
         if ($this->migration->version($version)) {
-            log_message('error', 'Migration Success.');
+            log_message('success', 'Migration Success.');
         } else {
             log_message('error', $this->migration->error_string());
         }
@@ -34,7 +30,7 @@ class Migrate extends CI_Controller {
     function latest()
     {
         if ($this->migration->latest()) {
-            log_message('error', 'Migration Success.');
+            log_message('success', 'Migration Success.');
         } else {
             log_message('error', $this->migration->error_string());
         }
