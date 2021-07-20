@@ -53,6 +53,7 @@ $route['news/create'] = 'news/create';
 $route['news/(:any)'] = 'news/view/$1';
 $route['news'] = 'news';
 $route['reports/create'] = 'dailyreports/create';
+$route['reports']['POST'] = 'dailyreports/store';
 $route['default_controller'] = 'pages/view';
 $route['(:any)'] = 'pages/view/$1';
 $route['404_override'] = '';
