@@ -1,6 +1,6 @@
 <?php
 
-class Daily_reports extends CI_Controller {
+class DailyReports extends CI_Controller {
 
     public function __construct()
     {
