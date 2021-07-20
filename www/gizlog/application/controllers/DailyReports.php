@@ -10,6 +10,11 @@ class DailyReports extends CI_Controller {
 
     public function create ()
     {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->load->view('templates/header');
+        $this->load->view('daily_reports/create');
         $this->load->view('templates/footer');
     }
 }
