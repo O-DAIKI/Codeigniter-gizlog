@@ -1,19 +1,18 @@
 <?php
 
-class DailyReports extends CI_Controller {
+class Daily_reports extends CI_Controller {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('dailyReportModel');
+        $this->load->model('daily_report_model');
         $this->load->helper('url');
         $this->load->helper('url_helper');
+        $this->load->library('form_validation');
     }
 
     public function create()
     {
-        $this->load->library('form_validation');
-
         $this->load->view('templates/header');
         $this->load->view('users/daily_reports/create');
         $this->load->view('templates/footer');
@@ -21,8 +20,6 @@ class DailyReports extends CI_Controller {
 
     public function store()
     {
-        $this->load->library('form_validation');
-
         $this->form_validation->set_rules('reporting_time', '作成日時', 'required|callback_check_input_date',
             [
                 'required' => '%sは入力必須の項目です。',
@@ -41,8 +38,8 @@ class DailyReports extends CI_Controller {
         if (!$this->form_validation->run()) {
             $this->create();
         } else {
-            $this->dailyReportModel->saveInput();
-            redirect('news');
+            $this->daily_report_model->saveInput();
+            redirect('news'); // 仮置きのURL
         }
     }
 
@@ -55,5 +52,30 @@ class DailyReports extends CI_Controller {
 
         $this->form_validation->set_message('check_input_date', '今日以前の日付を選択してください。');
         return FALSE;
+    }
+
+    public function show($id)
+    {
+        $data['daily_report'] = $this->daily_report_model->get_by_id($id);
+        $this->has_deleted_at($data['daily_report']);
+        $data['action'] = 'reports/' . $id;
+
+        $this->load->view('templates/header');
+        $this->load->view('users/daily_reports/show', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function delete($id)
+    {
+        $this->daily_report_model->delete_by_id($id);
+
+        redirect('/news'); // 仮置きのURL
+    }
+
+    public function has_deleted_at($daily_report)
+    {
+        if (isset($daily_report['deleted_at'])) {
+            redirect('news'); // 仮置きのURL
+        }
     }
 }
