@@ -14,9 +14,7 @@ class DailyReports extends CI_Controller {
     {
         $this->load->library('form_validation');
 
-        $this->load->view('templates/header');
-        $this->load->view('users/daily_reports/create');
-        $this->load->view('templates/footer');
+        $this->template_view('users/daily_reports/create');
     }
 
     public function store()
@@ -59,6 +57,13 @@ class DailyReports extends CI_Controller {
 
     public function show()
     {
-        //
+        $this->template_view('users/daily_reports/show');
+    }
+
+    public function template_view($url)
+    {
+        $this->load->view('templates/header');
+        $this->load->view($url);
+        $this->load->view('templates/footer');
     }
 }
