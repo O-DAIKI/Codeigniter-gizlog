@@ -78,4 +78,11 @@ class Daily_reports extends CI_Controller {
             redirect('news'); // 仮置きのURL
         }
     }
+
+    public function edit($id)
+    {
+        $this->load->view('templates/header');
+        $this->load->view('users/daily_reports/edit', $data);
+        $this->load->view('templates/footer');
+    }
 }
