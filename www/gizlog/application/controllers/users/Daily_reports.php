@@ -38,7 +38,7 @@ class Daily_reports extends CI_Controller {
         if (!$this->form_validation->run()) {
             $this->create();
         } else {
-            $this->daily_report_model->saveInput();
+            $this->daily_report_model->save_input();
             redirect('news'); // 仮置きのURL
         }
     }
@@ -69,7 +69,7 @@ class Daily_reports extends CI_Controller {
     {
         $this->daily_report_model->delete_by_id($id);
 
-        redirect('/news'); // 仮置きのURL
+        redirect('news'); // 仮置きのURL
     }
 
     public function has_deleted_at($daily_report)
