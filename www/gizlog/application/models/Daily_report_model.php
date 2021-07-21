@@ -6,14 +6,17 @@ class Daily_report_model extends CI_Model {
         $this->load->database('model');
     }
 
-    public function saveInput()
+    public function save_input()
     {
-        $input = array(
+        $today = date('Y-m-d H:i:s');
+
+        $input = [
             'title' => $this->input->post('title'),
             'content' => $this->input->post('content'),
             'reporting_time' => $this->input->post('reporting_time'),
-            'created_at' => date('Y-m-d H:i:s'),
-        );
+            'created_at' => $today,
+            'updated_at' => $today,
+        ];
 
         return $this->db->insert('daily_reports', $input);
     }
