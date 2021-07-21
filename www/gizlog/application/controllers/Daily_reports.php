@@ -1,26 +1,25 @@
 <?php
 
-class DailyReports extends CI_Controller {
+class Daily_reports extends CI_Controller {
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('dailyReportModel');
+        $this->load->model('daily_report_model');
         $this->load->helper('url');
         $this->load->helper('url_helper');
+        $this->load->library('form_validation');
     }
 
     public function create()
     {
-        $this->load->library('form_validation');
-
-        $this->template_view('users/daily_reports/create');
+        $this->load->view('templates/header');
+        $this->load->view('users/daily_reports/create');
+        $this->load->view('templates/footer');
     }
 
     public function store()
     {
-        $this->load->library('form_validation');
-
         $this->form_validation->set_rules('reporting_time', '作成日時', 'required|callback_check_input_date',
             [
                 'required' => '%sは入力必須の項目です。',
@@ -39,7 +38,7 @@ class DailyReports extends CI_Controller {
         if (!$this->form_validation->run()) {
             $this->create();
         } else {
-            $this->dailyReportModel->saveInput();
+            $this->daily_report_model->saveInput();
             redirect('news');
         }
     }
@@ -55,15 +54,13 @@ class DailyReports extends CI_Controller {
         return FALSE;
     }
 
-    public function show()
+    public function show($id)
     {
-        $this->template_view('users/daily_reports/show');
-    }
+        $data['daily_report'] = $this->daily_report_model->get_by_id($id);
+        $data['action'] = 'reports/' . $id;
 
-    public function template_view($url)
-    {
         $this->load->view('templates/header');
-        $this->load->view($url);
+        $this->load->view('users/daily_reports/show', $data);
         $this->load->view('templates/footer');
     }
 }
