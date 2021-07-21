@@ -4,13 +4,13 @@ class News extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('news_model');
+        $this->load->model('newsModel');
         $this->load->helper('url_helper');
     }
 
     public function index()
     {
-        $data['news'] = $this->news_model->get_news();
+        $data['news'] = $this->newsModel->get_news();
         $data['title'] = 'News archive';
 
         $this->load->view('templates/header', $data);
@@ -20,7 +20,7 @@ class News extends CI_Controller {
 
     public function view($slug = NULL)
     {
-        $data['news_item'] = $this->news_model->get_news($slug);
+        $data['news_item'] = $this->newsModel->get_news($slug);
 
         if (empty($data['news_item']))
         {
@@ -49,7 +49,7 @@ class News extends CI_Controller {
             $this->load->view('news/create');
             $this->load->view('templates/footer');
         } else {
-            $this->news_model->set_news();
+            $this->newsModel->set_news();
             $this->load->view('news/success');
         }
     }
