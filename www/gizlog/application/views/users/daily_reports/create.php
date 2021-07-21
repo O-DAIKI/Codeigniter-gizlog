@@ -1,7 +1,7 @@
 <h2 class="brand-header">日報作成</h2>
 <div class="main-wrap">
   <div class="container">
-    <?= form_open('reports', ['method' => 'POST']); ?>
+    <?= form_open('reports/create', ['method' => 'POST']); ?>
       <div class="form-group form-size-small <?php if (form_error('reporting_time')): ?> has-error <?php endif; ?>">
         <?= form_input(['name' => 'reporting_time', 'type' => 'date', 'class' => 'form-control', 'value' => set_value('reporting_time')]); ?>
           <span class="help-block"><?= form_error('reporting_time'); ?></span>
