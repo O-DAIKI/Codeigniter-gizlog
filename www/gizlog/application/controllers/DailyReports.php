@@ -56,4 +56,9 @@ class DailyReports extends CI_Controller {
         $this->form_validation->set_message('check_input_date', '今日以前の日付を選択してください。');
         return FALSE;
     }
+
+    public function show()
+    {
+        //
+    }
 }
