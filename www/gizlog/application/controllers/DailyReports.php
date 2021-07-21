@@ -13,41 +13,30 @@ class DailyReports extends CI_Controller {
     public function create()
     {
         $this->load->helper('form');
+        $this->load->library('form_validation');
 
         $this->load->view('templates/header');
         $this->load->view('users/daily_reports/create');
         $this->load->view('templates/footer');
     }
 
-    public function _check_input_date($date)
-    {
-        $today = date("Y/m/d");
-        if ($today < $date | isset($date)) {
-           return TRUE;
-        }
-
-        $this->form_validation->set_message('_check_input_date', '今日以前の日付を選択してください。');
-        return FALSE;
-    }
-
     public function store()
     {
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('reporting_time', 'date', 'required|callback__check_input_date',
+        $this->form_validation->set_rules('reporting_time', '作成日時', 'required|callback_check_input_date',
             [
-                'max_length' => '%s文字以内で入力してください。',
-                'required' => '入力必須の項目です。',
+                'required' => '%sは入力必須の項目です。',
             ]);
-        $this->form_validation->set_rules('title', '255', 'required|max_length[255]',
+        $this->form_validation->set_rules('title', 'タイトル', 'required|max_length[255]',
             [
-                'max_length' => '%s文字以内で入力してください。',
-                'required' => '入力必須の項目です。',
+                'required' => '%sは入力必須の項目です。',
+                'max_length' => '{param}文字以内で入力してください。',
             ]);
-        $this->form_validation->set_rules('content', '1000', 'required|max_length[1000]',
+        $this->form_validation->set_rules('content', '本文', 'required|max_length[1000]',
             [
-                'max_length[1000]' => '%s文字以内で入力してください。',
-                'required' => '入力必須の項目です。',
+                'required' => '%sは入力必須の項目です。',
+                'max_length' => '{param}文字以内で入力してください。',
             ]);
 
         if (!$this->form_validation->run()) {
@@ -56,5 +45,16 @@ class DailyReports extends CI_Controller {
             $this->dailyReportModel->saveInput();
             redirect('news');
         }
+    }
+
+    public function check_input_date($date)
+    {
+        $today = date("Y-m-d");
+        if ($date <= $today) {
+            return TRUE;
+        }
+
+        $this->form_validation->set_message('check_input_date', '今日以前の日付を選択してください。');
+        return FALSE;
     }
 }
