@@ -39,7 +39,7 @@ class Daily_reports extends CI_Controller {
             $this->create();
         } else {
             $this->daily_report_model->saveInput();
-            redirect('news');
+            redirect('news'); // 仮置きのURL
         }
     }
 
@@ -57,10 +57,25 @@ class Daily_reports extends CI_Controller {
     public function show($id)
     {
         $data['daily_report'] = $this->daily_report_model->get_by_id($id);
+        $this->has_deleted_at($data['daily_report']);
         $data['action'] = 'reports/' . $id;
 
         $this->load->view('templates/header');
         $this->load->view('users/daily_reports/show', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function delete($id)
+    {
+        $this->daily_report_model->delete_by_id($id);
+
+        redirect('/news'); // 仮置きのURL
+    }
+
+    public function has_deleted_at($daily_report)
+    {
+        if (isset($daily_report['deleted_at'])) {
+            redirect('news'); // 仮置きのURL
+        }
     }
 }

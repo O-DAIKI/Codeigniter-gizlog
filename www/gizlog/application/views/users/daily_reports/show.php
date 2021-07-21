@@ -20,9 +20,9 @@
     </div>
   </div>
   <div class="btn-bottom-wrapper">
-    <a class="btn btn-edit" href="{{ route('report.edit', $report->id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    <a class="btn btn-edit" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a>
     <div class="btn-delete">
-      <?= form_open($action, ['method' => 'DELETE']); ?>
+      <?= form_open($action, ['method' => 'POST']); ?>
         <?= form_button(['name' => 'submit', 'type' => 'submit'], '<i class="fa fa-trash-o"></i>', ['class' => 'btn btn-danger']); ?>
       <?= form_close(); ?>
     </div>

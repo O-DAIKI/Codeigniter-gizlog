@@ -23,4 +23,13 @@ class Daily_report_model extends CI_Model {
         $query = $this->db->get_where('daily_reports', ['id' => $id]);
         return $query->row_array();
     }
+
+    public function delete_by_id($id)
+    {
+        $data = [
+            'deleted_at' => date('Y-m-d H:i:s'),
+        ];
+
+        return $this->db->where('id', $id)->update('daily_reports', $data);
+    }
 }
