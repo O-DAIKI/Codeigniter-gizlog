@@ -88,4 +88,29 @@ class Daily_reports extends CI_Controller {
         $this->load->view('users/daily_reports/edit', $data);
         $this->load->view('templates/footer');
     }
+
+    public function update($id)
+    {
+        $this->form_validation->set_rules('reporting_time', '作成日時', 'required|callback_check_input_date',
+            [
+                'required' => '%sは入力必須の項目です。',
+            ]);
+        $this->form_validation->set_rules('title', 'タイトル', 'required|max_length[255]',
+            [
+                'required' => '%sは入力必須の項目です。',
+                'max_length' => '{param}文字以内で入力してください。',
+            ]);
+        $this->form_validation->set_rules('content', '本文', 'required|max_length[1000]',
+            [
+                'required' => '%sは入力必須の項目です。',
+                'max_length' => '{param}文字以内で入力してください。',
+            ]);
+
+        if (!$this->form_validation->run()) {
+            $this->edit($id);
+        } else {
+            $this->daily_report_model->update($id);
+            redirect('news'); // 仮置きのURL
+        }
+    }
 }
