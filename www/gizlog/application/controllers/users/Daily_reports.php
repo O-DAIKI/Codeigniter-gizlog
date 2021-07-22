@@ -58,7 +58,8 @@ class Daily_reports extends CI_Controller {
     {
         $data['daily_report'] = $this->daily_report_model->get_by_id($id);
         $this->has_deleted_at($data['daily_report']);
-        $data['action'] = 'reports/' . $id;
+        $data['action']['delete'] = 'reports/' . $id;
+        $data['action']['edit'] = 'reports/' . $id . '/edit';
 
         $this->load->view('templates/header');
         $this->load->view('users/daily_reports/show', $data);
@@ -81,8 +82,10 @@ class Daily_reports extends CI_Controller {
 
     public function edit($id)
     {
+        $data['action'] = 'reports/' . $id . '/edit';
+
         $this->load->view('templates/header');
-        $this->load->view('users/daily_reports/edit');
+        $this->load->view('users/daily_reports/edit', $data);
         $this->load->view('templates/footer');
     }
 }
